@@ -28,19 +28,12 @@
     
     [super viewDidLoad];
     
-//    self.cameraView.frame = self.view.frame;
-//
-//    _view = (MTKView *)self.view;
-//
     self.mtkView.device = MTLCreateSystemDefaultDevice();
     self.mtkView.backgroundColor = UIColor.blackColor;
     self.commandQueue = [self.mtkView.device newCommandQueue];
     
-    _filter = [CIFilter filterWithName:@"CIGaussianBlur"];
-           _colorSpace = CGColorSpaceCreateDeviceRGB();
-    self.context = [CIContext contextWithMTLCommandQueue:self.commandQueue]; //[CIContext contextWithMTLDevice:self.mtkView.device];
-    
-//    CVMetalTextureCacheCreate(NULL, NULL, m_Device, NULL, &_textureCache);
+    _colorSpace =  CGColorSpaceCreateDeviceRGB();
+    CVMetalTextureCacheCreate(NULL, NULL, self.mtkView.device, NULL, &_textureCache);
     
     //    _renderer = [[Renderer alloc] initWithMetalKitView:_view];
     //
@@ -96,32 +89,27 @@ static void MBEReleaseDataCallback(void *info, const void *data, size_t size)
     
     CVMetalTextureRef textureRef = NULL;
     if (_textureCache == nil) CVMetalTextureCacheCreate(NULL, (__bridge CFDictionaryRef _Nullable)(@{(id)kCVMetalTextureCacheMaximumTextureAgeKey : @(1.0)}), MTLCreateSystemDefaultDevice(), NULL, &_textureCache);
-    CVReturn status = CVMetalTextureCacheCreateTextureFromImage(kCFAllocatorDefault, _textureCache, pixelBuffer, NULL, MTLPixelFormatBGRA8Unorm_sRGB, width, height, 0, &textureRef);
+    CVReturn status = CVMetalTextureCacheCreateTextureFromImage(kCFAllocatorDefault, _textureCache, pixelBuffer, NULL, MTLPixelFormatBGRA8Unorm, width, height, 0, &textureRef);
     
     if(status == kCVReturnSuccess)
     {
         id <MTLTexture>texture = CVMetalTextureGetTexture(textureRef);
         
-//        Texture *context = (Texture *)malloc(sizeof(Texture));
-//        if (context != NULL)
-//        {
-//            context->texture = (void *)CFBridgingRetain(texture);
-//
-//            const char *label = [[NSString stringWithFormat:@"%ld", self->_textureHandler.event_index] cStringUsingEncoding:NSUTF8StringEncoding];
-//            dispatch_queue_set_specific([[TextureRenderer sharedContext] textureQueue], label, context, NULL);
-//            dispatch_source_merge_data(textureView_.textureQueueEvent, self->_textureHandler.event_index);
-//        }
+        Texture *context = (Texture *)malloc(sizeof(Texture));
+        if (context != NULL)
+        {
+            context->texture = (void *)CFBridgingRetain(texture);
+
+            const char *label = [[NSString stringWithFormat:@"%ld", self->_textureHandler.event_index] cStringUsingEncoding:NSUTF8StringEncoding];
+            dispatch_queue_set_specific(self->_textureHandler.textureDispatchQueue, label, context, NULL);
+            dispatch_source_merge_data(self->_textureHandler.textureDispatchSource, self->_textureHandler.event_index);
+        }
         
-        id<MTLCommandBuffer> commandBuffer = self.commandQueue.commandBuffer;
-        CIImage *image = [[[CIImage alloc] initWithMTLTexture:texture options:@{kCIImageColorSpace : CFBridgingRelease(CGColorSpaceCreateDeviceRGB())}] imageByApplyingOrientation:4];
-//            [image imageByApplyingOrientation:4];
-//                [self.filter setValue:inputImage forKey:kCIInputImageKey];
-//                [self.filter setValue:@(100) forKey:kCIInputRadiusKey];
-//        [self.filter setValue:outputImage forKey:kCIOutputImageKey];
-                
-                
+        // To-do: Replace with a MTLTexture.getBytes, etc., method to skip Core Image (too slow)
+//        id<MTLCommandBuffer> commandBuffer = self.commandQueue.commandBuffer;
+        CIImage *image = [[[CIImage alloc] initWithMTLTexture:texture options:@{kCIImageColorSpace : CFBridgingRelease(_colorSpace)}] imageByApplyingCGOrientation:kCGImagePropertyOrientationLeftMirrored];
         UIImage *uiimage = [UIImage imageWithCIImage:image];
-        NSLog(@"width\t%f\t\theight\t%f", uiimage.size.width, uiimage.size.height);
+//        NSLog(@"width\t%f\t\theight\t%f", uiimage.size.width, uiimage.size.height);
         [(UIImageView *)self.imageView setImage:uiimage];
         
         CFRelease(textureRef);
@@ -155,8 +143,8 @@ static void MBEReleaseDataCallback(void *info, const void *data, size_t size)
 ////                [self.filter setValue:inputImage forKey:kCIInputImageKey];
 ////                [self.filter setValue:@(100) forKey:kCIInputRadiusKey];
 ////        [self.filter setValue:outputImage forKey:kCIOutputImageKey];
-//                
-//                
+//
+//
 //        UIImage *uiimage = [UIImage imageWithCIImage:image];
 //        NSLog(@"width\t%f\t\theight\t%f", uiimage.size.width, uiimage.size.height);
 //        [(UIImageView *)self.imageView setImage:uiimage];
