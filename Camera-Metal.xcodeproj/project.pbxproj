@@ -14,6 +14,9 @@
 		B9452E3E2662AF2700510989 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9452E3D2662AF2700510989 /* Assets.xcassets */; };
 		B9452E412662AF2700510989 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9452E3F2662AF2700510989 /* LaunchScreen.storyboard */; };
 		B9452E442662AF2700510989 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B9452E432662AF2700510989 /* main.m */; };
+		B9452E4C2662F82B00510989 /* Camera.m in Sources */ = {isa = PBXBuildFile; fileRef = B9452E4B2662F82B00510989 /* Camera.m */; };
+		B9B86FE5266457250062D56C /* TextureSourceQueueEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = B9B86FE3266457250062D56C /* TextureSourceQueueEvent.m */; };
+		B9B86FE8266461160062D56C /* UIImage+MBETextureUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = B9B86FE7266461150062D56C /* UIImage+MBETextureUtilities.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,12 +26,18 @@
 		B9452E342662AF2500510989 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
 		B9452E352662AF2500510989 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
 		B9452E372662AF2500510989 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		B9452E382662AF2500510989 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		B9452E382662AF2500510989 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; wrapsLines = 0; };
 		B9452E3B2662AF2500510989 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B9452E3D2662AF2700510989 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B9452E402662AF2700510989 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B9452E422662AF2700510989 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9452E432662AF2700510989 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B9452E4A2662F82B00510989 /* Camera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; wrapsLines = 0; };
+		B9452E4B2662F82B00510989 /* Camera.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Camera.m; sourceTree = "<group>"; wrapsLines = 0; };
+		B9B86FE3266457250062D56C /* TextureSourceQueueEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureSourceQueueEvent.m; sourceTree = "<group>"; };
+		B9B86FE4266457250062D56C /* TextureSourceQueueEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureSourceQueueEvent.h; sourceTree = "<group>"; };
+		B9B86FE6266461150062D56C /* UIImage+MBETextureUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MBETextureUtilities.h"; sourceTree = "<group>"; };
+		B9B86FE7266461150062D56C /* UIImage+MBETextureUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MBETextureUtilities.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,11 +76,17 @@
 				B9452E352662AF2500510989 /* SceneDelegate.m */,
 				B9452E372662AF2500510989 /* ViewController.h */,
 				B9452E382662AF2500510989 /* ViewController.m */,
+				B9B86FE4266457250062D56C /* TextureSourceQueueEvent.h */,
+				B9B86FE3266457250062D56C /* TextureSourceQueueEvent.m */,
+				B9B86FE6266461150062D56C /* UIImage+MBETextureUtilities.h */,
+				B9B86FE7266461150062D56C /* UIImage+MBETextureUtilities.m */,
 				B9452E3A2662AF2500510989 /* Main.storyboard */,
 				B9452E3D2662AF2700510989 /* Assets.xcassets */,
 				B9452E3F2662AF2700510989 /* LaunchScreen.storyboard */,
 				B9452E422662AF2700510989 /* Info.plist */,
 				B9452E432662AF2700510989 /* main.m */,
+				B9452E4A2662F82B00510989 /* Camera.h */,
+				B9452E4B2662F82B00510989 /* Camera.m */,
 			);
 			path = "Camera-Metal";
 			sourceTree = "<group>";
@@ -146,7 +161,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9452E392662AF2500510989 /* ViewController.m in Sources */,
+				B9B86FE8266461160062D56C /* UIImage+MBETextureUtilities.m in Sources */,
+				B9452E4C2662F82B00510989 /* Camera.m in Sources */,
 				B9452E332662AF2500510989 /* AppDelegate.m in Sources */,
+				B9B86FE5266457250062D56C /* TextureSourceQueueEvent.m in Sources */,
 				B9452E442662AF2700510989 /* main.m in Sources */,
 				B9452E362662AF2500510989 /* SceneDelegate.m in Sources */,
 			);
